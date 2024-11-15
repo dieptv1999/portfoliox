@@ -26,7 +26,7 @@ export const metadata = createMetadata({
         alt: 'banner',
         width: 1629,
         height: 777,
-        url: 'https://i.ibb.co/mFvY8Vx/p-pfolio.png'
+        url: 'https://i.ibb.co/bLVcM90/p-pfolio.png'
       }
     ],
   },
@@ -37,7 +37,7 @@ export const metadata = createMetadata({
         width: 1629,
         height: 777,
         type: 'image/png',
-        url: 'https://i.ibb.co/mFvY8Vx/p-pfolio.png'
+        url: 'https://i.ibb.co/bLVcM90/p-pfolio.png'
       }
     ]
   }
