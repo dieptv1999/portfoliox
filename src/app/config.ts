@@ -8,7 +8,7 @@ const metadata: Metadata = {
   },
   site: {
     title: 'Tran Van Diep',
-    description: 'Portfolio of web & UI developer Tecklens.',
+    description: 'Portfolio of web/mobile developer Tran Van Diep.',
     url: 'https://www.example.com',
     keywords: [
       'web design',

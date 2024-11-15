@@ -20,7 +20,26 @@ export const metadata = createMetadata({
   description: meta.site.description,
   twitter: {
     title: meta.site.title,
-    description: meta.site.description
+    description: meta.site.description,
+    images: [
+      {
+        alt: 'banner',
+        width: 1629,
+        height: 777,
+        url: 'https://i.ibb.co/mFvY8Vx/p-pfolio.png'
+      }
+    ],
+  },
+  openGraph: {
+    images: [
+      {
+        alt: 'banner',
+        width: 1629,
+        height: 777,
+        type: 'image/png',
+        url: 'https://i.ibb.co/mFvY8Vx/p-pfolio.png'
+      }
+    ]
   }
 });
 
