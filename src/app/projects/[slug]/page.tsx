@@ -15,6 +15,8 @@ import { cn } from '@/lib/utils';
 
 import { HTMLAttributes } from 'react';
 
+export const runtime = 'edge';
+
 export async function generateStaticParams({
   params
 }: {

@@ -23,7 +23,7 @@ function Hero() {
           {/* items-center */}
           <div className="flex w-full items-center justify-center px-4 md:px-6">
             <h1 className="text-4xl font-light sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl">
-              <TextReveal>Hi 👋, I'm TRAN VAN DIEP</TextReveal>
+              <TextReveal>Hi 👋, I&apos;m TRAN VAN DIEP</TextReveal>
               <br />
               {/* className="whitespace-nowrap" */}
               <span className="flex items-center gap-2 md:gap-4">

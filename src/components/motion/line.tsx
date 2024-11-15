@@ -26,7 +26,7 @@ export default function Line({
   }, []);
 
   const setPath = (progress: number) => {
-    const width = window.innerWidth * 1;
+    const width = window.innerWidth;
 
     path.current?.setAttributeNS(
       null,
