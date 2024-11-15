@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import ParallaxImage from '@/components/motion/parallax-image';
 import React, { useRef } from 'react';
 
@@ -22,10 +22,19 @@ export default function MyPersonality() {
           scaleEnd: 1.5
         }}
       />
-      <div className={'absolute top-0 left-0 h-full w-full flex justify-center items-center'}>
-        <span className={'quote text-3xl md:text-4xl tracking-widest leading-loose md:leading-[1.4] text-white max-w-screen-md text-center'}>
-          I&apos;m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle.
-          But if you can&apos;t handle me at my worst, then you sure as hell don&apos;t deserve me at my best.
+      <div
+        className={
+          'absolute left-0 top-0 flex h-full w-full items-center justify-center'
+        }
+      >
+        <span
+          className={
+            'quote max-w-screen-md text-center text-xl leading-6 tracking-widest text-white md:text-4xl md:leading-[1.4]'
+          }
+        >
+          {/*I&apos;m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle.*/}
+          {/*But if you can&apos;t handle me at my worst, then you sure as hell don&apos;t deserve me at my best.*/}
+            You only live once, but if you do it right, once is enough.
         </span>
       </div>
     </section>

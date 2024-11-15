@@ -38,9 +38,9 @@ const skills: Skill[] = [
     ]
   },
   {
-    name: 'UI/UX Design',
+    name: 'Backend Developer',
     thumbnail: '/images/skills/ui-ux-design.jpg',
-    description: `UI/UX Design focuses on creating delightful user experiences through visually appealing and highly functional designs. This skill includes a variety of technologies, frameworks, and best practices to enhance user satisfaction and usability.`
+    description: `Database Management involves efficiently storing and organizing data. This skill covers a range of technologies, frameworks, and best practices to ensure data integrity, security, and performance.`
   },
   {
     name: 'Database Management',

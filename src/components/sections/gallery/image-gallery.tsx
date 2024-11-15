@@ -9,13 +9,11 @@ export default function ImageGallery() {
       src: '/images/received_343547978645019.jpeg',
       width: 2048,
       height: 1150,
-      caption: 'After Rain (Jeshu John - designerspics.com)'
     },
     {
       src: '/images/received_909459897398674.jpeg',
       width: 1156,
       height: 2048,
-      alt: 'Boats (Jeshu John - designerspics.com)'
     },
     {
       src: '/images/received_990149582310937.jpeg',

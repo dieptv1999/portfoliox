@@ -45,7 +45,7 @@ function Hero() {
       </div>
 
       <ParallaxImage
-        src="/images/hero.jpg"
+        src="/images/hero1.jpg"
         containerRef={container}
         alt="Hero image"
         containerClassName="aspect-[4/2] w-screen lg:mt-28"

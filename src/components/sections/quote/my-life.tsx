@@ -23,7 +23,7 @@ export default function MyLife() {
         }}
       />
       <div className={'absolute top-0 left-0 h-full w-full flex justify-center items-center'}>
-        <span className={'quote text-3xl md:text-5xl tracking-widest leading-loose md:leading-[1.4] text-white max-w-screen-md text-center'}>
+        <span className={'quote text-xl md:text-5xl tracking-widest leading-8 md:leading-[1.4] text-white max-w-screen-md text-center'}>
           There is no better insurance than the knowledge of how to do something the right way
         </span>
       </div>
