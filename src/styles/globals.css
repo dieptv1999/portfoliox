@@ -88,3 +88,8 @@
     @apply shadow-none;
   }
 }
+
+.quote::before, .quote::after {
+  content: '❝';
+  display: inline-block;
+}

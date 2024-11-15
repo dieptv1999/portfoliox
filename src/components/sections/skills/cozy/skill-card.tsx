@@ -21,6 +21,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
 import TextReveal from '@/components/motion/text-reveal';
+import React from 'react';
 
 interface SkillCardProps extends Skill {
   index: number;
@@ -30,11 +31,12 @@ interface SkillCardProps extends Skill {
 // todo: use text reveal for name and description
 // todo: use motion-primitives text-reveal
 export default function SkillCard({
-  name,
-  description,
-  thumbnail,
-  className
-}: SkillCardProps) {
+                                    name,
+                                    description,
+                                    icons,
+                                    thumbnail,
+                                    className
+                                  }: SkillCardProps) {
   return (
     <Dialog
       transition={{
@@ -78,6 +80,12 @@ export default function SkillCard({
                   : description ?? ''}
               </TextReveal>
             </DialogSubtitle>
+            {icons && <div className={'flex flex-wrap gap-3'}>
+              {icons.map(({ Icon, color, label }, idx) => <div className={'inline-flex gap-1'} key={idx}>
+                <Icon color={color} className="h-3 md:h-5 h-3 md:w-5" />
+                <span className={'whitespace-nowrap'}>{label}</span>
+              </div>)}
+            </div>}
           </div>
         </div>
       </DialogTrigger>

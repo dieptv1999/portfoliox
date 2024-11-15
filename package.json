@@ -47,6 +47,7 @@
     "next-transition-router": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-grid-gallery": "^1.0.1",
     "react-hook-form": "^7.52.2",
     "react-markdown": "^9.0.1",
     "rehype-sanitize": "^6.0.0",

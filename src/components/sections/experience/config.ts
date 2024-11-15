@@ -2,32 +2,32 @@ import { Experience } from '@/types/experience';
 
 const experiences: Experience[] = [
   {
-    name: 'Web Development',
+    name: 'Fullstack Developer',
     duration: '2022 - Present',
-    company: 'Acme Inc',
+    company: 'Viettel Construction',
     description:
-      'Building beautiful and functional websites using modern web technologies, focusing on performance, accessibility, and SEO-friendly design.'
+      'Design and build an e-commerce sales system including 3 domains: household appliances, home appliance repair technical services, and civil construction.'
   },
   {
-    name: 'UI/UX Design',
-    duration: '2021 - 2022',
-    company: 'Creative Designs Ltd',
+    name: 'Fullstack Developer',
+    duration: 'Sep. 2021 – 2022',
+    company: 'TrustKeys Network',
     description:
-      'Creating delightful and intuitive user experiences, specializing in responsive design and user-centric methodologies.'
+      'Analysis, design and program of the NFT exchange system. Maintain a secure wallet application for blockchain'
   },
   {
-    name: 'Database Management',
-    duration: '2020 - 2022',
-    company: 'DataTech Solutions',
+    name: 'Frontend Developer (Reactjs)',
+    duration: 'Dec. 2020 – Sep. 2021',
+    company: 'VCS Express',
     description:
-      'Storing and organizing data efficiently, ensuring data integrity, and optimizing database queries for high traffic applications.'
+      'Operate in logistics service, cross-border dropship sales. Design and develop international delivery applications to the US, Canada.'
   },
   {
-    name: 'Mobile Development',
-    duration: '2019 - 2021',
-    company: 'Innovative Apps Inc',
+    name: 'Fullstack: Reactjs + Flask',
+    duration: 'Sep. 2020 – Mar. 2021',
+    company: 'Soelab - Hanoi University of Science and Technology',
     description:
-      'Crafting engaging and scalable apps for smartphones and tablets, focusing on cross-platform development and native performance.'
+      'Learn and work on programming languages of nextjs, python/flask.'
   }
 ];
 

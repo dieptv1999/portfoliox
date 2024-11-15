@@ -9,6 +9,8 @@ import type { LinkProps } from 'next/link';
 
 type AnimatedLinkProps = Omit<LinkProps, 'children'> & {
   children: React.ReactNode;
+  target?: string;
+  className?: any;
 };
 
 export default function AnimatedLink({

@@ -1,13 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
-import { CodeIcon } from 'lucide-react';
 import styles from './style.module.scss';
-import { opacity, background } from './anim';
+import { background, opacity } from './anim';
 import Nav from './nav';
-
-import { metadata as meta } from '@/app/config';
+import { SiGithub, SiLinkedin, SiX } from '@icons-pack/react-simple-icons';
 
 interface HeaderProps {
   loader?: boolean;
@@ -31,19 +29,30 @@ const Header = ({ loader }: HeaderProps) => {
       }}
     >
       <div className={styles.bar}>
-        <Link href="/" className="flex items-center justify-center">
-          <span className="text-md font-semibold transition-transform hover:translate-x-1 hover:translate-y-1">
-            {meta.author.name}
-          </span>
-        </Link>
+        <div className={'flex gap-3'}>
+          <Link href={'https://github.com/dieptv1999'} target={'_blank'}>
+            <SiGithub size={18} />
+          </Link>
+          <Link href={'https://www.linkedin.com/in/techlens/'} target={'_blank'}>
+            <SiLinkedin size={18} />
+          </Link>
+          <Link href={'https://x.com/techlensglobal'} target={'_blank'}>
+            <SiX size={18} />
+          </Link>
+        </div>
+        {/*<Link href="/" className="flex items-center justify-center">*/}
+        {/*  <span className="text-md font-semibold transition-transform hover:translate-x-1 hover:translate-y-1">*/}
+        {/*    {meta.author.name}*/}
+        {/*  </span>*/}
+        {/*</Link>*/}
         <div onClick={() => setIsActive(!isActive)} className={styles.el}>
           <div className={styles.label}>
-            <motion.p
-              variants={opacity}
-              animate={!isActive ? 'open' : 'closed'}
-            >
-              Menu
-            </motion.p>
+            {/*<motion.p*/}
+            {/*  variants={opacity}*/}
+            {/*  animate={!isActive ? 'open' : 'closed'}*/}
+            {/*>*/}
+            {/*  Menu*/}
+            {/*</motion.p>*/}
             <motion.p variants={opacity} animate={isActive ? 'open' : 'closed'}>
               Close
             </motion.p>

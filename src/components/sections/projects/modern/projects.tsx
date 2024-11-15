@@ -38,7 +38,7 @@ function Projects() {
                 </h2>
               </Reveal>
             </div>
-            <p className="mt-4 hidden text-gray-500 dark:text-gray-400 lg:mt-0 lg:block lg:w-[35%]">
+            <p className="mt-4 hidden text-gray-500 dark:text-gray-400 lg:mt-0 lg:block lg:w-[35%] text-end">
               Here are some of my projects where I&apos;ve turned code into
               cool, functional stuff.
             </p>
@@ -63,7 +63,7 @@ function Projects() {
                         href={project.url}
                         description={project.data.description}
                         tags={project.data.tags}
-                        thumbnail={`/images/projects/${project.slugs[0]}/cover.jpg`}
+                        thumbnail={`/images/projects/${project.slugs[0]}/cover.jpg?v=2`}
                       />
                     </div>
                   </CarouselItem>

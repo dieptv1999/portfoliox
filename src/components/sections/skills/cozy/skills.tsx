@@ -23,7 +23,7 @@ function Skills() {
               </h2>
             </Reveal>
           </div>
-          <p className="mt-4 hidden text-gray-500 dark:text-gray-400 lg:mt-0 lg:block lg:w-[35%]">
+          <p className="mt-4 hidden text-gray-500 dark:text-gray-400 lg:mt-0 lg:block lg:w-[35%] text-end">
             Here are some of my skills where I&apos;ve turned knowledge into
             expertise, making things happen.
           </p>
@@ -36,6 +36,7 @@ function Skills() {
               name={skill.name}
               description={skill.description}
               thumbnail={skill.thumbnail}
+              icons={skill.icons}
             />
           ))}
         </div>

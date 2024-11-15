@@ -45,6 +45,7 @@ const Index: React.FC<IndexProps> = ({ setIsActive }) => {
         <Image
           src={links[selectedLink.index].thumbnail}
           isActive={selectedLink.isActive}
+          alt={'share'}
         />
         <div className="absolute bottom-0 right-0 mb-auto">
           <ModeToggle />

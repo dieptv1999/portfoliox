@@ -54,7 +54,7 @@ export default function BlogPage(): React.ReactElement {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <section
-        className="relative flex min-h-[calc(50dvh)] items-center justify-center"
+        className="relative flex min-h-[200px] md:min-h-[calc(40dvh)] items-center justify-center"
         id="hero"
       >
         <div className="flex flex-col items-center md:max-w-7xl">
