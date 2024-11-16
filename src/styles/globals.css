@@ -89,7 +89,12 @@
   }
 }
 
-.quote::before, .quote::after {
-  content: '❝';
+.quote::before {
+  content: '“';
+  display: inline-block;
+}
+
+.quote::after {
+  content: '”';
   display: inline-block;
 }

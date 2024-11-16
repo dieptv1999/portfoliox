@@ -13,7 +13,7 @@ export default function MyLife() {
         src="/images/IMG_20231215_085943.jpg"
         containerRef={container}
         alt="Hero image"
-        containerClassName="aspect-[4/2] w-screen lg:mt-28"
+        containerClassName="aspect-[4/2] xl:aspect-[3/1] w-screen lg:mt-28"
         priority
         parallaxOptions={{
           yStart: '-10%',
@@ -23,7 +23,7 @@ export default function MyLife() {
         }}
       />
       <div className={'absolute top-0 left-0 h-full w-full flex justify-center items-center'}>
-        <span className={'quote text-xl md:text-5xl tracking-widest leading-8 md:leading-[1.4] text-white max-w-screen-md text-center'}>
+        <span className={'quote text-xl md:text-5xl xl:text-6xl tracking-widest leading-8 md:leading-[1.4] text-white max-w-screen-md text-center'}>
           There is no better insurance than the knowledge of how to do something the right way
         </span>
       </div>

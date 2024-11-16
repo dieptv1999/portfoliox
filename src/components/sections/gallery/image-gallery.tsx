@@ -70,6 +70,26 @@ export default function ImageGallery() {
       width: 2048,
       height: 1150
     },
+    {
+      src: '/images/ipad1.jpeg',
+      width: 1776,
+      height: 1184
+    },
+    {
+      src: '/images/ipad2.jpeg',
+      width: 1184,
+      height: 1776
+    },
+    {
+      src: '/images/ipad3.jpeg',
+      width: 1776,
+      height: 1184
+    },
+    {
+      src: '/images/ipad4.jpeg',
+      width: 1776,
+      height: 1184
+    },
   ];
 
   return (

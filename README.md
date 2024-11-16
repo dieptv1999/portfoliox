@@ -1,9 +1,9 @@
 <p align="center">
-  <img alt="" src="/.github/assets/cover.png" />
+  <img alt="" src="https://i.ibb.co/bLVcM90/p-pfolio.png" />
 </p>
 
 <h1 align="center">
-  shadcn-portfolio
+  Tecklens portfolio
 </h1>
 
 <p align="center">
@@ -60,6 +60,7 @@ portfolio template.
 
 This project wouldn’t be possible without the following open-source projects:
 
+- MDX Rendering and Logic from [shadcn-portfolio](https://github.com/techwithanirudh/shadcn-portfolio)
 - MDX Rendering and Logic from [fumadocs](https://github.com/fuma-nama/fumadocs)
 - MDX Data from [content-collections](https://www.content-collections.dev/)
 - UI from [shadcn/ui](https://ui.shadcn.com/)
@@ -68,32 +69,7 @@ This project wouldn’t be possible without the following open-source projects:
 
 This project has been inspired by the following websites:
 
-- [honghong.me](https://honghong.me/)
-- [cuberto.com](https://cuberto.com/)
-- [fuma-nama.vercel.app](https://fuma-nama.vercel.app/)
-- [fumadocs.vercel.app](https://fumadocs.vercel.app/)
-- [dennissnellenberg.com](https://dennissnellenberg.com/)
-- [bychristinakosik.com](https://www.bychristinakosik.com/)
-- [danmachado.com](https://www.danmachado.com/)
-- [ui.aceternity.com](https://ui.aceternity.com/)
-- [blog.olivierlarose.com](https://blog.olivierlarose.com/)
-- [props.studiolumio.com](https://props.studiolumio.com/)
-- [dennissnellenberg.com](https://dennissnellenberg.com/)
-- [davidhaz.com](https://davidhaz.com/)
-- [fellipeutaka.vercel.app](https://fellipeutaka.vercel.app/)
-- [a-bd.me](https://www.a-bd.me/)
-- [luge.cool](https://luge.cool/)
-- [nahelmoussi.com](https://nahelmoussi.com/)
-- [boyntonyards.com](https://boyntonyards.com/)
-- [ped.ro](https://ped.ro/)
-- [leerob.io](https://leerob.io/)
-- [portfolio hero challenge](https://x.com/thereal_apk/status/1829874339254321290)
-- [minimal homepage exploration](https://x.com/FonsMans/status/1829510586843152791)
-- [suxmaiya.framer.website](https://x.com/SumaiyaSsa/status/1828451225714471209)
-- [jrhu.me](https://jrhu.me/)
-- [github.com/ismamz/next-transition-router](https://github.com/ismamz/next-transition-router)
-- [jorisbrianti.fr](https://jorisbrianti.fr/)
-- [athos-dark.framer.ai](https://athos-dark.framer.ai/)
+- [shadcn-portfolio](https://github.com/techwithanirudh/shadcn-portfolio)
 
 and more
 

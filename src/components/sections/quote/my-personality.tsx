@@ -13,7 +13,7 @@ export default function MyPersonality() {
         src="/images/IMG_20231211_124347.jpg"
         containerRef={container}
         alt="Hero image"
-        containerClassName="aspect-[4/2] w-screen lg:mt-28"
+        containerClassName="aspect-[4/2] xl:aspect-[24/9] w-screen lg:mt-28"
         priority
         parallaxOptions={{
           yStart: '-10%',
@@ -29,7 +29,7 @@ export default function MyPersonality() {
       >
         <span
           className={
-            'quote max-w-screen-md text-center text-xl leading-6 tracking-widest text-white md:text-4xl md:leading-[1.4]'
+            'quote max-w-screen-md text-center text-xl leading-6 tracking-widest text-white md:text-5xl xl:text-6xl md:leading-[1.4] xl:leading-[1.5]'
           }
         >
           {/*I&apos;m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle.*/}
