@@ -18,10 +18,19 @@ function About() {
             <div className="space-y-4">
               <p className="max-w-[700px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 <TextReveal>
-                  I am a passionate and creative Web Developer with a love for
-                  beautiful and functional websites. I have experience working
-                  with a variety of web technologies and frameworks and I am
-                  always eager to learn new things and take on new challenges.
+                  {/*I am a passionate and creative Web Developer with a love for*/}
+                  {/*beautiful and functional websites. I have experience working*/}
+                  {/*with a variety of web technologies and frameworks and I am*/}
+                  {/*always eager to learn new things and take on new challenges.*/}
+                  I&apos;m an engineer with over 4.5 years of software development experience. I&apos;m also a
+                  goal-oriented individual, always eager to learn new things, tackle challenges, and solve difficult
+                  problems. At work, i primarily use the Java and Javascript language, which has given me a solid
+                  understanding of the Spring Boot, Flutter and Next.js frameworks.
+                </TextReveal>
+                <TextReveal>
+                  In my software projects, I&apos;ve predominantly worked on microservices, allowing me to grasp web
+                  development concepts, handle logging, and work with Kafka for event handling, Overall, I strive to
+                  create practical and efficient systems.
                 </TextReveal>
               </p>
               <div className="flex gap-2">
