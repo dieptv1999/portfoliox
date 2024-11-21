@@ -1,12 +1,12 @@
-import { Skill } from '@/types/skill';
+import {Skill} from '@/types/skill';
 import {
   SiAngular,
   SiFlutter,
-  SiMariadb,
+  SiMariadb, SiNestjs,
   SiNextdotjs,
   SiOracle,
   SiReact,
-  SiShadcnui
+  SiShadcnui, SiSpringboot
 } from '@icons-pack/react-simple-icons';
 
 const trimLen: number = -1; // 0 is accordion only, -1 is does not restrict the length
@@ -38,9 +38,21 @@ const skills: Skill[] = [
     ]
   },
   {
-    name: 'Backend Developer',
+    name: 'Backend Development',
     thumbnail: '/images/skills/ui-ux-design.jpg',
-    description: `Database Management involves efficiently storing and organizing data. This skill covers a range of technologies, frameworks, and best practices to ensure data integrity, security, and performance.`
+    description: `
+Backend development involves designing, organizing, and developing applications related to e-commerce sales in the fields of: household appliances, refrigeration repair services, introduction of civil construction services`,
+    icons: [
+      {
+        Icon: SiSpringboot,
+        label: 'Spring Boot'
+      },
+      {
+        Icon: SiNestjs,
+        color: '#1783e1',
+        label: 'Nestjs'
+      },
+    ]
   },
   {
     name: 'Database Management',
@@ -77,4 +89,4 @@ const skills: Skill[] = [
   }
 ];
 
-export { trimLen, skills };
+export {trimLen, skills};
