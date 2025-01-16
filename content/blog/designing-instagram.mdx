@@ -1,0 +1,182 @@
+---
+title: Thiết kế hệ thống Instagram
+description: Hãy thiết kế một dịch vụ chia sẻ ảnh (photo-sharing service) như IG, nơi người dùng tải ảnh lên để chia sẻ với những người khác
+date: 2025-01-16
+author: Tran Van Diep
+---
+
+> Tập hợp các bài viết về thiết kế hệ thống phân tán hay nhất
+
+Instagram(IG) cho phép người dùng tải lên và chia sẻ hình ảnh và video của họ với người dùng khác.
+Người dùng có thể chọn chia sẻ với phạm vi (scope) công khai hoặc riêng tư.
+Bất kỳ nội dung được chia sẻ công khai nào đểu có thể được bất kỳ người dùng nào khác xem (thường ưu tiên theo vị trí địa lý),
+trong khi nội dung được chia sẻ riêng tư chỉ được một nhóm người cụ thể truy cập.
+
+Chúng tôi dự định thiết kế một phiên bản IG đơn giản hơn, nơi người dùng có thể chia sẻ ảnh và cũng có thể theo dõi những người dùng khác.
+
+# Yêu cầu và mục tiêu của hệ thống
+
+---
+
+**Yêu cầu chức năng**
+
+1. Người dùng có thể tải lên/ tải xuống/ xem ảnh
+2. Người dùng có thể thực hiện tìm kiếm dựa trên tiêu đề ảnh/video
+3. Người dùng có thể theo dõi người dùng khác
+4. Hệ thống sẽ tạo ra newsfeed bao gồm những bức ảnh hàng đầu từ tất cả những người mà họ theo dõi
+
+**Yêu cầu phi chức năng**
+1. Dịch vụ cần có tính khả dụng cao
+2. Độ trễ chấp nhận được là 200ms cho một "Hệ thống tạo newsfeed - News Feed Generation"
+3. Hệ thống phải có độ tin cậy cao; tỉ lệ mất ảnh/ video phải rất thấp.
+
+# Ước tính khả năng và ràng buộc của hệ thống
+
+---
+
+Hệ thống này có yêu cầu đọc nhiều hơn ghi, vì vậy chúng tôi sẽ tập trung vào việc xây dựng một hệ thống 
+có thể truy xuất ảnh nhanh chóng.
+- Giả sử chúng ta có tổng cộng 500 triệu người dùng, với 1 triệu người dùng hoạt động hằng ngày.
+- 2 triệu ảnh mới mỗi ngày, 23 ảnh mới mỗi giây.
+- Kích thước tệp hình ảnh trung bình ~ 200KB
+- Vậy chúng ta sẽ có dung lượng hình ảnh cần thiết cho một ngày là
+
+    `2M * 200KB ~ 400GB`
+- Tổng dung lượng trong 5 năm sẽ là:
+    
+    `400GB * 365 * 5 = 730TB`
+
+# Thiết kế hệ thống nâng cao
+
+---
+
+Ở cấp độ nâng cao, chúng ta cần hỗ trợ hai tình huống: tải ảnh lên và xem/ tìm kiếm ảnh.
+
+Chúng ta cần máy chủ lưu trữ object(S3) để lưu trữ ảnh và một số máy chủ DB để lưu trữ thông tin siêu dữ liệu về ảnh.
+
+![img.png](img.png)
+
+# Thiết kế cơ sở dữ liệu
+
+> Thiết kế CSDL sẽ giúp hiểu luồng dữ liệu giữa các thành phần khác nhau và định hướng trước phân vùng dữ liệu.
+
+Về cơ bản, chúng ta cần lưu trữ những dữ liệu chính: người dùng, hình ảnh/ video của họ, những người theo dõi họ.
+
+**Table *Photo***
+
+| Photo                    |
+|--------------------------|
+| photo_id: bigint(pk)     |
+| user_id: int             |
+| photo_path: varchar(256) |
+| photo_latitude: int      |
+| photo_longitude: int     |
+| user_latitude: int       |
+| user_longitude: int      |
+| created_at: int          |
+
+**Table *User***
+
+| User                 |
+|----------------------|
+| user_id: int (pk)    |
+| name: varchar(25)    |
+| email: varchar(32)   |
+| dob: datetime        |
+| created_at: datetime |
+| last_login: datetime |
+
+**Table *UserFollow***
+
+| UserFollow             |
+|------------------------|
+| follower_id: int (pk)  |
+| following_id: int (pk) |
+
+Chúng ta có thể sử dụng RDBMS như MySQL vì chúng ta cần các truy vấn quan hệ. 
+Nhưng cơ sở dữ liệu quan hệ đi kèm với những thách thức của chúng, đặc biệt là khi mở rộng quy mô.
+Vì vây, chúng ta có thể lưu trữ lược đồ trong kho dữ liệu NoSQL phân tán (distributed) theo column như [https://github.com/apache/cassandra](Cassandra).
+
+Tất cả siêu dữ liệu hình ảnh có thể chuyển đến một bảng trong đó `key` là `photo_id` và `value` 
+sẽ là một đối tượng chứa các chi tiết liên quan đến hình ảnh.
+**Cassandra** và hầu hết các kho lưu trữ `key-value` duy trì một số lượng bản sao nhất định để cung cấp độ tin cậy.
+Ngoài ra, trong các kho lưu trữ dữ liệu này, các lệnh xóa không được áp dụng ngay lập tức, dữ liệu được giữ lại trong vài ngày để hỗ trợ khôi phục xóa,
+trước khi bị xóa vĩnh viễn.
+
+Chúng ta có thể lưu trữ hình ảnh của người dùng dưới dạng hệ thống lưu trữ tệp phân tán như [https://vi.wikipedia.org/wiki/Apache_Hadoop](Hadoop) hoặc [https://en.wikipedia.org/wiki/Amazon_S3](S3).
+
+# Ước tính kích thước dữ liệu
+
+---
+
+Hãy ước tính chúng ta sẽ cần bao nhiêu dung lượng lưu trữ trong 5 năm tới.
+
+## User
+
+Giả sử rằng mỗi int và datetime là 4 bytes, bigint là 8 bytes, mỗi hàng trong bảng user sẽ có:
+```
+user_id(4 bytes) + name(25 bytes) + email(32 bytes) + dob(4 bytes) + 
+created_at(4 bytes) + last_login(4 bytes) = 73 bytes
+```
+
+Như vậy, chúng ta sẽ có tổng dung lượng với 500 triệu người dùng:
+```
+500 triệu * 73 bytes ~ 36,5 GB
+```
+
+## Photo
+
+Mỗi hàng(record) trong bảng `photo` sẽ có:
+```
+photo_id(8 bytes) + user_id(4 bytes) + photo_path(256 bytes) + 
+photo_latitude(4 bytes) + photo_longtitude(4 bytes) + user_latitude(4 bytes) + 
+user_longtitude(4 bytes) + created_at(4 bytes) = 288 bytes
+```
+
+Hệ thống sẽ nhận được 2 triệu bức ảnh mỗi ngày, vì vậy trong một ngày hệ thống cần:
+```
+2M * 288 bytes ~ 0,57 GB
+
+Với 5 năm dữ liệu chúng ta cần:
+0,57 GB * 365 * 5 ~ 1 TB
+```
+
+## UserFollow
+
+Mỗi hàng có 8 bytes dữ liệu. Giả sử trung bình mỗi người dùng theo dõi 500 người dùng, chúng ta sẽ cần 1,82TB dung lượng
+lưu trữ cho bảng `user_follow
+```
+8 bytes * 500 followers * 500M users ~ 1,82TB
+```
+
+Tổng dung lượng cần thiết cho các bảng dữ liệu trong 5 năm sẽ là:
+```
+36,5 GB + 1 TB + 1,82 TB ~ 2,8 TB
+```
+
+# Thiết kế các thành phần hệ thống
+
+Việc tải ảnh lên (hoặc ghi) có thể chậm vì chúng phải được lưu vào đĩa, trong khi việc đọc sẽ nhanh hơn, đặc biệt nếu chúng được phục vụ từ bộ nhớ đệm.
+
+Người dùng tải ảnh lên có thể sử dụng tất cả các kết nối khả dụng vì quá trình tải lên chậm, nghĩa là không thể phục vụ các yêu cầu đọc
+nếu hệ thống bận xử lý các yêu cầu ghi.
+
+Chúng ta nên nhớ rằng tất cả các máy chủ web đều có giới hạn kết nối.
+Nếu chúng ta cho rằng một máy chủ web có thể có tối đa 500 kết nối đồng thời, 
+thì có không thể có hơn 500 lần xử lý đọc/ghi đồng thời. 
+Để xử lý tình trạng tắc nghẽn này, chúng ta có thể chia các api đọc và ghi thành các dịch vụ riêng biệt (CQRS), server chuyên dụng cho các api đọc và các máy chủ khác nhau cho các api ghi/tải lên để đảm bảo không chiếm dụng hệ thống.
+
+> Ngoài ra, việc tách biệt api đọc và ghi sẽ cho phép chúng ta mở rộng quy mô và tối ưu hóa từng hoạt động một cách độc lập.
+
+![img_1.png](img_1.png)
+
+# Độ tin cậy và dự phòng
+Việc mất tập tin là một sự độc hại đối với hệ thống này. Nó có thể làm rất nhiều người dùng rời bỏ hệ thống.
+
+Chúng tôi sẽ lưu trữ nhiều bản sao của mỗi tệp để nếu một máy chủ lưu trữ bị hỏng, thì vẫn có thể
+lấy lại một bản sao trên một máy chủ lưu trữ khác.
+
+Nguyên tắc này cũng áp dụng cho phần còn lại của hệ thống. Nếu chúng ta muốn tính khả dụng cao, chúng ta cần có nhiều bản sao
+của các dịch vụ đang chạy, để nếu một vài dịch vụ ngừng hoạt động, hệ thống vẫn khả dụng.
+
+Nếu có hai phiên bản
