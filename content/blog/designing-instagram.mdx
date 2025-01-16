@@ -179,4 +179,97 @@ lấy lại một bản sao trên một máy chủ lưu trữ khác.
 Nguyên tắc này cũng áp dụng cho phần còn lại của hệ thống. Nếu chúng ta muốn tính khả dụng cao, chúng ta cần có nhiều bản sao
 của các dịch vụ đang chạy, để nếu một vài dịch vụ ngừng hoạt động, hệ thống vẫn khả dụng.
 
-Nếu có hai phiên bản
+Nếu có hai phiên bản của cùng một dịch vụ đang chạy trên môi trường sản xuất, khi một phiên bản bị lỗi,
+hệ thống có thể chuyển đổi dự phòng sang phiên bản còn lại đang hoạt động. Quá trình chuyển đổi dự phòng có thể diễn ra 
+tự động hoặc thực hiện thủ công.
+
+# Phân chia dữ liệu (Data Sharding)
+
+1. Phân vùng dựa trên  `user_id`
+
+Chúng ta có thể phân chia (shard) dựa trên `user_id`, để có thể giữ tất cả hình ảnh của người dùng trên cùng một phân vùng. Nếu một phân vùng DB là 1TB,
+chúng ta cần 3 phân vùng để lưu trữ 2,8 TB dữ liệu. 
+Giả sử để có hiệu suất và khả năng mở rộng tốt hơn, chúng ta có thể tạo 10 phân vùng.
+
+Chúng ta sẽ tìm `số phân vùng` bằng các thực hiện `user_id % 10` (hash) và lưu dữ liệu ở phân vùng đó. 
+Để xác định duy nhất từng ảnh trong hệ thống, chúng ta có thể thêm `số phân vùng` vào mỗi `photo_id`.
+
+**Chúng ta tạo photo_id như thế nào?** Mỗi phân vùng DB có thể có trình tự tăng tự động riêng cho `photo_id` và vì
+chúng ta sẽ thêm `shard_id` vào mỗi `photo_id` nên nó sẽ trở thành duy nhất trên toàn bộ hệ thống.
+
+Các vấn đề đối với cách tiếp cận này:
+- Chúng ta sẽ xử lý những người dùng nổi tiếng như thế nào? Những người nổi tiếng trên IG có rất nhiều người theo dõi, nghĩa là nhiều người sẽ nhìn thấy bất kỳ bức ảnh nào mà họ tải lên.
+- Một số người dùng sẽ có nhiều ảnh hơn những người khác, do đó dữ liệu sẽ được phân bổ không đều giữa các vùng.
+- Việc lưu trữ tất cả ảnh của người dùng trên một phân vùng có thể gây ra các vấn đề như không khả dụng nếu phân vùng đó ngừng hoạt động hoặc có độ trễ cao hơn nếu phân vùng đó đang phục vụ lượng tải lớn.
+
+2. Phân vùng dựa trên `photo_id`
+
+Nếu chúng ta tạo ra `photo_id` duy nhất trước, sau đó tìm số phân vùng bằng cách dùng hàm hash `photo_id % 10`,
+các vấn đề trên sẽ được giải quyết. Chúng ta sẽ không cần phải thêm `shard_id` vào `photo_id` vì photo_id sẽ tự nó là duy nhất trên toàn bộ hệ thống.
+
+**Làm thế nào để tạo `photo_id`?** Chúng ta có thể dành riêng một phiên bản DB để tạo ID tự động tăng. 
+Nếu `photo_id` của chúng ta có thể vừa 8 bytes, chúng ta có thể định nghĩa một bảng chỉ chứa trường ID 8 bytes này.
+Vì vậy, bất cứ khi nào chúng ta muốn thêm ảnh, thì chỉ cần chèn một hàng mới vào bảng `photo` 
+và lấy ID đó làm `photo_id` cho ảnh mới.
+
+> DB tạo khóa cho ảnh sẽ là bottleneck duy nhất
+
+Một giải pháp thay thế cho vấn đề này là xác định hai DB như vậy:
+- một tạo ra các ID có số chẵn
+- một tạo ra các ID có số lẻ
+```
+KeyGeneratingServer1:
+auto-increment-increment = 2
+auto-increment-offset = 1
+ 
+KeyGeneratingServer2:
+auto-increment-increment = 2
+auto-increment-offset = 2
+```
+
+Sau đó chúng ta có thể đặt một bộ cân bằng tải trước cả 2 DB để đảm bảo sự sẵn sàng của hệ thống.
+
+Ngoài ra, chúng ta có thể có một dịch vụ tạo khóa độc lập (KGS) tạo ra chuỗi sáu chữ cái ngẫu nhiên trước và lưu trữ chúng trong cơ sở dữ liệu key-DB.
+
+# Xếp hạng và tạo Newsfeed
+
+Chúng tôi cần lấy những bức ảnh mới nhất và phổ biến nhất của những người mà người dùng theo dõi.
+
+- Hãy lấy danh sách những người mà người dùng theo dõi và lấy thông tin siêu dữ liệu của 100 bức ảnh mới nhất cho mỗi người.
+- Gửi tất cả ảnh cho thuật toán xếp hạng để xác định 100 ảnh hàng đầu (dựa vào mức độ mới, mức độ giống nhau, v.v).
+- Trả lại cho người dùng dưới dạng nguồn cấp tin tức.
+
+Để nâng cao hiệu quả, chúng ta có thể tạo trước Newsfeed và lưu trữ trong một bảng riêng.
+
+Tạo trước nguồn cấp tin tức:
+- Dành riêng các máy chủ liên tục tạo nguồn cấp tin tức của người dùng và lưu trữ chúng trong một bảng `newsfeed`.
+Khi bất kỳ người dùng nào cần ảnh mới nhất, chúng tôi chỉ cần truy vấn bảng này.
+- Khi máy chủ cần tạo lại, trước tiên chúng sẽ truy vấn bảng `newsfeed` để tìm nguồn cung mới nhất được tạo.
+Sau đó, dữ liệu tin tức mới sẽ được tạo từ thời điểm đó trở đi.
+
+**Chúng tôi gửi nội dung newsfeed tới người dùng như thế nào?**
+1. Pull: Máy khách kéo nội dung từ máy chủ theo định kỳ hoặc thủ công
+Nó có các vấn đề:
+- Dữ liệu mới không hiển thị cho đến khi khách hàng gửi api yêu cầu.
+- Hầu hết các api lấy dữ liệu sẽ dẫn đến phản hồi trống nếu không có dữ liệu. (Làm người dùng cuối khó chịu)
+
+2. Push: Máy chủ đẩy dữ liệu mới đến người dùng ngay khi có. Người dùng yêu cầu long poll (giữ kết nối dài) với máy chủ.
+Một vấn đề có thể xảy ra là người dùng theo dõi nhiều người hoặc người dùng nổi tiếng có hàng triệu người theo dõi; máy chủ sẽ phải ẩy nhiều bản cập nhật khá thường xuyên,
+gây nên quá tải cho máy chủ.
+3. Hybrid (Hỗn hợp):
+- Chúng ta có thể áp dụng phương pháp kết hợp của hai cách tiếp cận. Người duùng có nhiều người theo dõi sẽ sử dụng mô hình `pull`.
+Hệ thống sẽ chỉ đẩy (push) dữ liệu đến những người dùng có < 1000 người theo dõi.
+- Máy chủ đẩy các bản cập nhật tới tất cả ngời dùng với tần suất nhất định và cho phép những người dùng có nhiều bản cập nhật thường xuyên lấy dữ liệu.
+
+# Bộ nhớ đệm và cân bằng tải
+
+Dịch vụ sẽ cần một hệ thống phân phối ảnh quy mô lớn để phục vụ người dùng trên toàn cầu.
+
+Hệ thống sẽ đưa nội dung đến gần người dùng hơn bằng cách sử dụng một số lượng lớn các CDN phân bổ theo địa lý.
+
+Hệ thống cũng có thể có bộ nhớ đệm cho máy chủ siêu dữ liệu để lưu trữ đệm các hàng DB lưu lượng cao. Memcache có thể lưu trữ dữ liệu và máy chủ ứng dụng trước khi gọi vào DB thực. 
+
+**Làm thế nào chúng ta có thể xây dựng một bộ nhớ đệm thông minh hơn?**
+Nếu chúng ta áp dụng quy tắc 80%-20% lượt đọc ảnh tạo ra 80% lưu lượng truy cập. 
+Điều này có nghĩa là một số ảnh nhất định rất phổ biến đến mức phần lớn mọi người xem/ tìm kiếm chúng.
+Do đó, chúng ta có thể thử lưu trữ đệm 20% khối lượng đọc ảnh và siêu dữ liệu hằng ngày.
