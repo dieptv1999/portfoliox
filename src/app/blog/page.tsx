@@ -82,7 +82,7 @@ export default function BlogPage(): React.ReactElement {
             description={post.data.description}
             key={`post_${index}`}
             date={new Date(post.data.date ?? post.file.name)}
-            thumbnail={`/images/blog/${post.slugs[0]}/cover.jpg`}
+            thumbnail={`/images/blog/${post.slugs[0]}/cover.png`}
           />
         ))}
       </section>

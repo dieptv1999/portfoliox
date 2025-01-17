@@ -1,5 +1,5 @@
 ---
-title: Thiết kế hệ thống Instagram
+title: Thiết kế đơn giản một hệ thống ảnh như Instagram
 description: Hãy thiết kế một dịch vụ chia sẻ ảnh (photo-sharing service) như IG, nơi người dùng tải ảnh lên để chia sẻ với những người khác
 date: 2025-01-16
 author: Tran Van Diep
@@ -54,7 +54,7 @@ có thể truy xuất ảnh nhanh chóng.
 
 Chúng ta cần máy chủ lưu trữ object(S3) để lưu trữ ảnh và một số máy chủ DB để lưu trữ thông tin siêu dữ liệu về ảnh.
 
-![img.png](img.png)
+![img.png](/images/blog/designing-instagram/img.png)
 
 # Thiết kế cơ sở dữ liệu
 
@@ -168,7 +168,7 @@ thì có không thể có hơn 500 lần xử lý đọc/ghi đồng thời.
 
 > Ngoài ra, việc tách biệt api đọc và ghi sẽ cho phép chúng ta mở rộng quy mô và tối ưu hóa từng hoạt động một cách độc lập.
 
-![img_1.png](img_1.png)
+![img_1.png](/images/blog/designing-instagram/img_1.png)
 
 # Độ tin cậy và dự phòng
 Việc mất tập tin là một sự độc hại đối với hệ thống này. Nó có thể làm rất nhiều người dùng rời bỏ hệ thống.
@@ -182,6 +182,8 @@ của các dịch vụ đang chạy, để nếu một vài dịch vụ ngừng 
 Nếu có hai phiên bản của cùng một dịch vụ đang chạy trên môi trường sản xuất, khi một phiên bản bị lỗi,
 hệ thống có thể chuyển đổi dự phòng sang phiên bản còn lại đang hoạt động. Quá trình chuyển đổi dự phòng có thể diễn ra 
 tự động hoặc thực hiện thủ công.
+
+![img_2.png](/images/blog/designing-instagram/img_2.png)
 
 # Phân chia dữ liệu (Data Sharding)
 

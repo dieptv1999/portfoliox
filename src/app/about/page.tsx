@@ -25,39 +25,16 @@ export default function About() {
 
           <Line className={'mt-16'} />
         </div>
-        {/*<motion.div*/}
-        {/*  className="absolute bottom-8 left-1/2 -translate-x-1/2 transform"*/}
-        {/*  style={{ opacity }}*/}
-        {/*  animate={{ y: [0, 10, 0] }}*/}
-        {/*  transition={{ duration: 1.5, repeat: Infinity }}*/}
-        {/*>*/}
-        {/*  <ChevronDown className="h-8 w-8" />*/}
-        {/*</motion.div>*/}
+        <div>
+          Hi there I’m Diep Tran, currently I live in Hanoi, Vietnam working as
+          a software engineer at Viettel Construction. My projects include web,
+          mobile software. Being comfortable with code allows me to rapidly
+          prototype and validate experiences. If you’re interested in the tools
+          and software I use check out my uses page. In my spare time I like to
+          play music, play video games, and competition programming. I’m always
+          down for hearing about new projects, so feel free to drop me a line.
+        </div>
       </section>
-      {/*<section*/}
-      {/*  className="relative flex min-h-[calc(50dvh)] items-center justify-center bg-foreground text-background"*/}
-      {/*  id="skills"*/}
-      {/*>*/}
-      {/*  <div className="flex flex-col items-center md:max-w-7xl">*/}
-      {/*    <h1 className="leading-wide tracking-relaxed text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl">*/}
-      {/*      <TextReveal delay={0.1}>*/}
-      {/*        A young tech enthusiast who loves to code*/}
-      {/*      </TextReveal>*/}
-      {/*    </h1>*/}
-      {/*    <Line*/}
-      {/*      className={'mt-16'}*/}
-      {/*      borderColor={'text-muted-foreground/50'}*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*  /!*<motion.div*!/*/}
-      {/*  /!*  className="absolute bottom-8 left-1/2 -translate-x-1/2 transform"*!/*/}
-      {/*  /!*  style={{ opacity }}*!/*/}
-      {/*  /!*  animate={{ y: [0, 10, 0] }}*!/*/}
-      {/*  /!*  transition={{ duration: 1.5, repeat: Infinity }}*!/*/}
-      {/*  /!*>*!/*/}
-      {/*  /!*  <ChevronDown className="h-8 w-8" />*!/*/}
-      {/*  /!*</motion.div>*!/*/}
-      {/*</section>*/}
     </main>
   );
 }
